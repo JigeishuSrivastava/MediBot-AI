@@ -1,28 +1,28 @@
 # 🏥 MediBot: Advanced AI-Powered Medical Assistant (RAG Pipeline)
 
-MediBot ek professional **Generative AI** application hai jo medical knowledge base (PDF documents) aur Large Language Models (LLMs) ka upyog karke user ke sawalon ka satik aur context-aware jawab deta hai. Yeh project **Retrieval-Augmented Generation (RAG)** architecture par adharit hai.
+MediBot is a professional **Generative AI** application that leverages a custom medical knowledge base (PDF documents) and Large Language Models (LLMs) to provide accurate, context-aware answers to user queries. The project is built on the **Retrieval-Augmented Generation (RAG)** architecture.
 
 ---
 
 ## 🌟 Key Highlights
-* **Intelligent Document Retrieval**: FAISS (Facebook AI Similarity Search) ka upyog karke hazaron medical pages mein se seconds mein relevant context dhoondta hai.
-* **Ultra-Fast Inference**: Groq Cloud inference engine ke saath **Llama-3.1-8b** model ka use karke super-fast responses generate karta hai.
-* **Professional Medical UI**: Streamlit par banaya gaya ek custom interface jisme glass-morphism design aur black text readability ka dhyan rakha gaya hai.
-* **Contextual Accuracy**: Bot sirf provide kiye gaye medical context se hi jawab deta hai, jisse AI hallucinations ka khatra kam ho jata hai.
+* **Intelligent Document Retrieval**: Uses FAISS (Facebook AI Similarity Search) to find relevant context from thousands of medical pages within seconds.
+* **Ultra-Fast Inference**: Utilizes the **Llama-3.1-8b** model via the Groq Cloud inference engine for lightning-fast response generation.
+* **Professional Medical UI**: Developed with Streamlit, featuring a custom glass-morphism design and high-readability typography.
+* **Contextual Accuracy**: The bot strictly answers based on the provided medical context, significantly reducing the risk of AI hallucinations.
 
 ---
 
 ## 🏗️ Technical Architecture & Workflow
 
-MediBot ka internal workflow niche diye gaye steps par kaam karta hai:
-
-1.  **Data Extraction**: `PyPDFLoader` ka upyog karke `data/` folder se medical PDFs ko read kiya jata hai.
-2.  **Smart Chunking**: Bade documents ko `RecursiveCharacterTextSplitter` ke zariye 500 characters ke chhote chunks mein toda jata hai taaki LLM context window mein fit ho sake.
-3.  **Vector Embeddings**: Hugging Face ka `all-MiniLM-L6-v2` model har chunk ko high-dimensional vector embeddings mein convert karta hai.
-4.  **Vector Storage**: In embeddings ko local FAISS database mein store kiya jata hai fast similarity search ke liye.
-5.  **RAG Execution**: User ki query aane par, retriever top-3 relevant chunks nikaalta hai aur use Prompt Template ke saath Groq LLM ko bhejta hai.
+MediBot's internal workflow follows a structured RAG pipeline:
 
 
+
+1.  **Data Extraction**: Uses `PyPDFLoader` to read medical PDFs from the `data/` directory.
+2.  **Smart Chunking**: Large documents are split into smaller 500-character segments using `RecursiveCharacterTextSplitter` to fit within the LLM's context window.
+3.  **Vector Embeddings**: The Hugging Face `all-MiniLM-L6-v2` model converts each chunk into high-dimensional vector embeddings.
+4.  **Vector Storage**: Embeddings are stored in a local FAISS database for high-speed similarity searches.
+5.  **RAG Execution**: When a user submits a query, the retriever fetches the top 3 relevant chunks and sends them along with a custom Prompt Template to the Groq LLM.
 
 ---
 
@@ -41,18 +41,18 @@ MediBot ka internal workflow niche diye gaye steps par kaam karta hai:
 
 ## 📂 Project Structure
 
-Is project ka directory structure niche diya gaya hai taaki aap component flow ko samajh sakein:
+The directory structure is organized to ensure a clean separation of concerns and data flow:
 
 ```text
 MediBot-AI/
-├── data/                        # Input directory (Yahan apni Medical PDFs rakhein)
+├── data/                        # Input directory (Place your Medical PDFs here)
 │   └── medical_manual.pdf       # Sample medical document
 ├── vectorstore/                 # Vector Database storage
 │   └── db_faiss/                # FAISS index files (index.faiss, index.pkl)
-├── venv/                        # Python Virtual Environment (Local only)
-├── .env                         # Environment variables (API Keys - Hidden)
-├── .gitignore                   # Git ko batane ke liye ki kaunsi files push nahi karni
-├── requirements.txt             # Python libraries ki list (Deployment ke liye zaroori)
+├── venv/                        # Python Virtual Environment
+├── .env                         # Environment variables (API Keys - Git ignored)
+├── .gitignore                   # Files to be excluded from version control
+├── requirements.txt             # List of Python libraries for deployment
 ├── README.md                    # Project documentation
 ├── ingest.py                    # Data processing script (PDF to Vectorstore)
 ├── medibot.py                   # Main Application file (Streamlit UI)
