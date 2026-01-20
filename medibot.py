@@ -54,11 +54,11 @@ def main():
     
     /* Main Chat Container spacing */
     .stChatMessageContainer {
-        gap: 25px !important; /* Boxes ke beech vertical space */
+        gap: 25px !important; 
         padding-top: 20px !important;
     }
 
-    /* Chat messages box style with increased margin */
+    /* Chat messages box style (Black text inside white boxes) */
     .stChatMessage {
         background-color: rgba(255, 255, 255, 0.9) !important;
         color: #000000 !important;
@@ -66,7 +66,7 @@ def main():
         border: 1px solid rgba(0, 80, 150, 0.2) !important;
         padding: 20px !important;
         box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2) !important;
-        margin-bottom: 25px !important; /* Individual box ke neeche space */
+        margin-bottom: 25px !important;
     }
 
     /* Message text black and clear */
@@ -88,9 +88,16 @@ def main():
         margin-bottom: 40px !important;
     }
 
-    /* Input field text color */
+    /* --- INPUT BOX STYLING (The Fix) --- */
+    /* Target the text the user is typing */
     .stChatInput textarea {
-        color: #000000 !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+
+    /* Target the placeholder "Write your Medical Questions Here" */
+    .stChatInput textarea::placeholder {
+        color: rgba(255, 255, 255, 0.7) !important;
     }
 
     .stChatInputContainer {
