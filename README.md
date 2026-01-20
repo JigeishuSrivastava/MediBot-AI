@@ -40,77 +40,20 @@ MediBot ka internal workflow niche diye gaye steps par kaam karta hai:
 ---
 
 ## 📂 Project Structure
+
+Is project ka directory structure niche diya gaya hai taaki aap component flow ko samajh sakein:
+
 ```text
 MediBot-AI/
-├── medibot.py               # Main Streamlit Application UI
-├── ingest.py                # Script for processing PDFs & creating FAISS index
-├── chat_loop.py             # CLI based chat interface
-├── requirements.txt         # List of Python dependencies
-├── .env                     # API Keys (Local use only - Ignored by Git)
-├── .gitignore               # Configuration for ignoring unnecessary files
-├── data/                    # Directory containing Medical PDF documents
-└── vectorstore/             # Saved FAISS vector database files
-⚙️ Setup & Installation Guide
-1. Clone the Repository
-Bash
-git clone [https://github.com/JigeishuSrivastava/MediBot-AI.git](https://github.com/JigeishuSrivastava/MediBot-AI.git)
-cd MediBot-AI
-2. Create and Activate Virtual Environment
-Bash
-python -m venv venv
-# Windows:
-venv\Scripts\activate
-# Linux/Mac:
-source venv/bin/activate
-3. Install Required Libraries
-Bash
-pip install -r requirements.txt
-4. Configure Environment Variables
-Apne project root mein ek .env file banayein aur ye credentials add karein:
-
-Code snippet
-GROQ_API_KEY=your_groq_api_key_here
-HF_TOKEN=your_huggingface_token_here
-5. Initialize Knowledge Base (Vectorization)
-Apne PDFs ko data/ folder mein rakhein aur niche di gayi command run karein:
-
-Bash
-python ingest.py
-6. Start the Assistant
-Bash
-streamlit run medibot.py
-🌐 Deployment on Streamlit Cloud
-GitHub par apni repository push karein (Ensure karein .env push na ho).
-
-Streamlit Cloud dashboard par jayein aur repository connect karein.
-
-Advanced Settings mein ja kar Secrets section mein apni API keys TOML format mein dalein:
-
-Ini, TOML
-GROQ_API_KEY = "gsk_..."
-HF_TOKEN = "hf_..."
-Deploy par click karein aur aapka MediBot live ho jayega!
-
-📸 UI Customizations
-Glassmorphism: Chat bubbles mein 90% opacity white background ka use kiya gaya hai.
-
-Typography: Behtar readability ke liye pure black text (#000000) ka upyog kiya gaya hai.
-
-Spacing: Boxes ke beech 25px ka professional gap rakha gaya hai.
-
-🤝 Contributing
-MediBot ek open-source project hai. Agar aap naye features add karna chahte hain, toh feel free to open a Pull Request!
-
-📜 License
-This project is licensed under the MIT License.
-
-
----
-
-### Final Implementation:
-Ise save karne ke baad terminal mein ye commands chalayein taaki GitHub par update dikhne lage:
-1. `git add README.md`
-2. `git commit -m "MediBot: Comprehensive README with technical details"`
-3. `git push origin main`
-
-**Kya aap chahte hain ki main bot ke liye ek "Disclaimer" section bhi add karun jo bataye ki ye sirf education purpose ke liye hai?**
+├── data/                        # Input directory (Yahan apni Medical PDFs rakhein)
+│   └── medical_manual.pdf       # Sample medical document
+├── vectorstore/                 # Vector Database storage
+│   └── db_faiss/                # FAISS index files (index.faiss, index.pkl)
+├── venv/                        # Python Virtual Environment (Local only)
+├── .env                         # Environment variables (API Keys - Hidden)
+├── .gitignore                   # Git ko batane ke liye ki kaunsi files push nahi karni
+├── requirements.txt             # Python libraries ki list (Deployment ke liye zaroori)
+├── README.md                    # Project documentation
+├── ingest.py                    # Data processing script (PDF to Vectorstore)
+├── medibot.py                   # Main Application file (Streamlit UI)
+└── chat_loop.py                 # Backend testing script (Terminal-based chat)
