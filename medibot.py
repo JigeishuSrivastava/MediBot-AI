@@ -2,13 +2,19 @@ import os
 import streamlit as st
 from dotenv import load_dotenv
 
-# Environment variables load karein
+# Local environment variables load karne ke liye
 load_dotenv()
+
+# --- LangSmith Config (Local aur Live dono ke liye) ---
+# Hum .env file se keys uthayenge
+os.environ["LANGCHAIN_TRACING_V2"] = os.getenv("LANGCHAIN_TRACING_V2", "true")
+os.environ["LANGCHAIN_API_KEY"] = os.getenv("LANGCHAIN_API_KEY")
+os.environ["LANGCHAIN_PROJECT"] = os.getenv("LANGCHAIN_PROJECT", "MediBot-Project")
+os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
 
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.chains.retrieval_qa.base import RetrievalQA
 from langchain_community.vectorstores import FAISS
-from langchain_core.prompts import PromptTemplate
 from langchain_groq import ChatGroq
 
 # Vector Database Path
@@ -42,10 +48,10 @@ def set_custom_prompt():
     return PromptTemplate(template=prompt_template, input_variables=["context", "question"])
 
 def main():
-    # --- Custom CSS for Spacing & Style ---
+    # --- ORIGINAL BACKGROUND & CSS (AS PER YOUR REQUEST) ---
     medical_style = """
     <style>
-    /* Background setup */
+    /* Background setup with your original URL */
     .stApp {
         background-image: url("https://wallpaperaccess.com/full/624111.jpg");
         background-attachment: fixed;
@@ -58,7 +64,7 @@ def main():
         padding-top: 20px !important;
     }
 
-    /* Chat messages box style (Black text inside white boxes) */
+    /* Chat messages box style (Original White Boxes) */
     .stChatMessage {
         background-color: rgba(255, 255, 255, 0.9) !important;
         color: #000000 !important;
@@ -88,14 +94,12 @@ def main():
         margin-bottom: 40px !important;
     }
 
-    /* --- INPUT BOX STYLING (The Fix) --- */
-    /* Target the text the user is typing */
+    /* Input Box text color fix */
     .stChatInput textarea {
         color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
     }
 
-    /* Target the placeholder "Write your Medical Questions Here" */
     .stChatInput textarea::placeholder {
         color: rgba(255, 255, 255, 0.7) !important;
     }
@@ -104,23 +108,16 @@ def main():
         padding-bottom: 30px !important;
         background-color: transparent !important;
     }
-
-    /* Spinner readability */
-    .stStatusWidget {
-        background-color: rgba(255, 255, 255, 0.9) !important;
-        color: #000000 !important;
-        border-radius: 10px;
-    }
     </style>
     """
     st.markdown(medical_style, unsafe_allow_html=True)
     
     st.title("🛡️ MediBot: AI Medical Assistant")
 
-    # API Key check
+    # API Key check from .env
     groq_api_key = os.getenv("GROQ_API_KEY")
     if not groq_api_key:
-        st.error("GROQ_API_KEY missing! Apni .env file check karein.")
+        st.error("GROQ_API_KEY missing! .env check karein.")
         return
 
     # Chat Session State
@@ -142,20 +139,11 @@ def main():
         try:
             vectorstore = get_vectorstore()
             if vectorstore:
-                # QA Chain setup
                 qa_chain = RetrievalQA.from_chain_type(
-                    llm=ChatGroq(
-                        model_name="llama-3.1-8b-instant",
-                        temperature=0.1,
-                        groq_api_key=groq_api_key,
-                    ),
-                    chain_type="stuff",
-                    retriever=vectorstore.as_retriever(search_kwargs={'k': 3}),
-                    return_source_documents=True,
-                    chain_type_kwargs={'prompt': set_custom_prompt()}
+                    llm=ChatGroq(model_name="llama-3.1-8b-instant", groq_api_key=groq_api_key),
+                    retriever=vectorstore.as_retriever(search_kwargs={'k': 3})
                 )
 
-                # Generate Response
                 with st.spinner("Searching medical database..."):
                     response = qa_chain.invoke({'query': user_input})
                     answer = response["result"]
