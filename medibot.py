@@ -2,11 +2,8 @@ import os
 import streamlit as st
 from dotenv import load_dotenv
 
-# Local environment variables load karne ke liye
 load_dotenv()
 
-# --- LangSmith Config (Local aur Live dono ke liye) ---
-# Hum .env file se keys uthayenge
 os.environ["LANGCHAIN_TRACING_V2"] = os.getenv("LANGCHAIN_TRACING_V2", "true")
 os.environ["LANGCHAIN_API_KEY"] = os.getenv("LANGCHAIN_API_KEY")
 os.environ["LANGCHAIN_PROJECT"] = os.getenv("LANGCHAIN_PROJECT", "MediBot-Project")
@@ -48,7 +45,6 @@ def set_custom_prompt():
     return PromptTemplate(template=prompt_template, input_variables=["context", "question"])
 
 def main():
-    # --- ORIGINAL BACKGROUND & CSS (AS PER YOUR REQUEST) ---
     medical_style = """
     <style>
     /* Background setup with your original URL */
@@ -129,7 +125,6 @@ def main():
         with st.chat_message(message['role']):
             st.markdown(message['content'])
 
-    # User Input
     user_input = st.chat_input("Write your Medical Questions Here")
 
     if user_input:
