@@ -7,10 +7,8 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains.retrieval import create_retrieval_chain
 
-# .env load karein
-load_dotenv()
 
-# Purana Vectorstore load karein
+load_dotenv()
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 db = FAISS.load_local("vectorstore/db_faiss", embeddings, allow_dangerous_deserialization=True)
 
