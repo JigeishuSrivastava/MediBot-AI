@@ -23,7 +23,7 @@ Question: {input}
 combine_docs_chain = create_stuff_documents_chain(llm, prompt)
 rag_chain = create_retrieval_chain(db.as_retriever(), combine_docs_chain)
 
-print("\n✅ Bot Ready! Purana vectorstore use ho raha hai.")
+print("\n✅")
 while True:
     user_query = input("You: ")
     if user_query.lower() in ["exit", "quit"]: break
