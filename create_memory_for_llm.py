@@ -5,7 +5,6 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 
-# .env load karein taaki LangSmith tracking enable ho sake
 load_dotenv()
 
 DATA_PATH = "data/"
@@ -24,7 +23,7 @@ def ingest_data():
     
     db = FAISS.from_documents(text_chunks, embeddings)
     db.save_local(DB_FAISS_PATH)
-    print(f"✅ Naya Vector DB save ho gaya hai: {DB_FAISS_PATH}")
+    print(f"Save new Vector: {DB_FAISS_PATH}")
 
 if __name__ == "__main__":
    
